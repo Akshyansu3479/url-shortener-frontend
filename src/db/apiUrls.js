@@ -91,8 +91,21 @@ export async function createUrl(
   // console.log("userid:", user_id);
 
   // Fetch the short URL from the provided service
+  // const response = await fetch(
+  //   "http://lb-cli-serv-url-shrtnr-1049647747.ap-south-1.elb.amazonaws.com/create",
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "*/*",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ originalUrl: longUrl }),
+  //   }
+  // );
+
+  // After Proxy : Fetch the short URL from the provided service
   const response = await fetch(
-    "http://lb-cli-serv-url-shrtnr-1049647747.ap-south-1.elb.amazonaws.com/create",
+    "/api/create",  // The proxy route (Vercel will handle this)
     {
       method: "POST",
       headers: {
@@ -102,6 +115,7 @@ export async function createUrl(
       body: JSON.stringify({ originalUrl: longUrl }),
     }
   );
+  
 
   if (response.status == 429) {
     throw new Error("Too Many Requests. Please try again later.");
